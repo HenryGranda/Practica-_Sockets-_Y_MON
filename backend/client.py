@@ -92,40 +92,85 @@ def confirm_name():
         send_button.config(state=tk.NORMAL)  # Habilitar el botón de enviar
         threading.Thread(target=connect_to_server, daemon=True).start()
 
-# Configurar la interfaz
+# Configurar la interfaz gráfica
 def setup_gui():
     global nickname, chat_box, message_entry, send_button, name_entry, confirm_button
 
     # Configurar ventana principal
     root.title("Chat en Tiempo Real")
-    root.geometry("500x500")
-    root.configure(bg="#282c34")
+    root.geometry("600x600")
+    root.configure(bg="#2c3e50")
 
-    # Marco para entrada del nombre
-    frame_nombre = tk.Frame(root, bg="#282c34")
-    frame_nombre.pack(pady=10)
-    tk.Label(frame_nombre, text="Ingresa tu Nombre:", font=("Arial", 14), bg="#282c34", fg="white").pack(side=tk.LEFT, padx=5)
-    name_entry = tk.Entry(frame_nombre, font=("Arial", 12), width=20)
+    # Marco superior para el título
+    title_frame = tk.Frame(root, bg="#34495e", height=50)
+    title_frame.pack(fill=tk.X)
+    tk.Label(
+        title_frame,
+        text="Chat en Tiempo Real",
+        font=("Arial", 18, "bold"),
+        bg="#34495e",
+        fg="white",
+        pady=10,
+    ).pack()
+
+    # Marco para la entrada del nombre
+    frame_nombre = tk.Frame(root, bg="#2c3e50", pady=10)
+    frame_nombre.pack()
+    tk.Label(
+        frame_nombre,
+        text="Ingresa tu Nombre:",
+        font=("Arial", 12),
+        bg="#2c3e50",
+        fg="white",
+    ).pack(side=tk.LEFT, padx=5)
+    name_entry = tk.Entry(frame_nombre, font=("Arial", 12), width=20, bg="#ecf0f1")
     name_entry.pack(side=tk.LEFT, padx=5)
-    confirm_button = tk.Button(frame_nombre, text="Confirmar", command=confirm_name, bg="#61afef", fg="white", font=("Arial", 12))
-    confirm_button.pack(side=tk.LEFT)
+    confirm_button = tk.Button(
+        frame_nombre,
+        text="Confirmar",
+        command=confirm_name,
+        bg="#3498db",
+        fg="white",
+        font=("Arial", 12, "bold"),
+        width=10,
+    )
+    confirm_button.pack(side=tk.LEFT, padx=5)
 
-    # Caja de texto para mostrar mensajes
-    chat_box = scrolledtext.ScrolledText(root, state='disabled', width=60, height=20, bg="#1e2127", fg="white", font=("Courier", 12))
-    chat_box.pack(pady=10, padx=10)
+    # Marco para la caja de texto de mensajes
+    chat_frame = tk.Frame(root, bg="#2c3e50", pady=10)
+    chat_frame.pack(fill=tk.BOTH, expand=True)
+    chat_box = scrolledtext.ScrolledText(
+        chat_frame,
+        state="disabled",
+        bg="#1e272e",
+        fg="white",
+        font=("Courier", 12),
+        wrap=tk.WORD,
+        height=20,
+    )
+    chat_box.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
 
     # Marco para entrada de mensajes
-    entry_frame = tk.Frame(root, bg="#282c34")
-    entry_frame.pack(pady=10)
-
-    # Entrada de mensajes
-    message_entry = tk.Entry(entry_frame, width=40, font=("Arial", 12), bg="#ECF0F1")
-    message_entry.pack(side=tk.LEFT, padx=5)
+    entry_frame = tk.Frame(root, bg="#2c3e50", pady=10)
+    entry_frame.pack(fill=tk.X)
+    message_entry = tk.Entry(
+        entry_frame, width=50, font=("Arial", 12), bg="#f1f2f6"
+    )
+    message_entry.pack(side=tk.LEFT, padx=10, pady=5, fill=tk.X, expand=True)
     message_entry.bind("<Return>", send_message)
 
     # Botón para enviar mensajes
-    send_button = tk.Button(entry_frame, text="Enviar", command=send_message, bg="#98c379", fg="white", font=("Arial", 12), state=tk.DISABLED)
-    send_button.pack(side=tk.LEFT)
+    send_button = tk.Button(
+        entry_frame,
+        text="Enviar",
+        command=send_message,
+        bg="#2ecc71",
+        fg="white",
+        font=("Arial", 12, "bold"),
+        state=tk.DISABLED,
+        width=12,
+    )
+    send_button.pack(side=tk.LEFT, padx=10)
 
 # Iniciar la aplicación
 root = tk.Tk()
